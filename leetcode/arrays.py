@@ -43,25 +43,44 @@ class Solution:
         index1 = 0
         index2 = 0
         retval = []
+        retval_indexes = []
         for val in nums:
             index2 = index1 + 1
             for val2 in nums[index1 + 1:]:
-                    print(f'index2 is: {index2}')
+                    # print(f'index2 is: {index2}')
                     val_need = 0 - val - val2
+
+                    # check to make sure (val, val2, val_need) is not already in retval
+                    # otherwise just continue to the next
+                    if self.exists_already(val, val2, retval):
+                        index2 += 1
+                        continue
+
+
                     print(f'{val} and {val2} so need this val: {val_need}')
                     if val_need in dic:
                         vals = dic[val_need]
-                        print(f'found {val_need} in dic {vals}')
+                        # print(f'found {val_need} in dic {vals}')
                         # find the index that is not index1 or index2
                         for index_val in vals:
                             if index1 != index_val and index2 != index_val:
-                                tup = [nums[index1], nums[index2], val_need]
+                                tup = [val, val2, val_need]
+                                # print(f'appending tup: {tup}')
                                 retval.append(tup)
+                                the_indexes = [index1, index_val, index2]
+                                # print(f'appending retval_index: {the_indexes}')
+                                retval_indexes.append(the_indexes)
                                 break
-                    
+                    index2 += 1
             index1 += 1
 
         return retval
+
+    def exists_already(self, val, val2, retval):
+        for vals in retval:
+            if (val in vals) and (val2 in vals):
+                return True
+        return False
 
     def create_dictionary(self, nums):
         dic = {}
@@ -83,6 +102,9 @@ s = Solution()
 # ret = s.islandPerimeter(grid)
 # print(f'ret is: {ret}')   
 
-grid = [-1,0,1,2,-1,-4]
+# grid = [-1,0,1,2,-1,-4]
+#  grid = [1,2,-2,-1]
+# grid = [0, 0, 0]
+grid = [-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0]
 ret = s.threeSum(grid)
 print(f'ret is: {ret}')
