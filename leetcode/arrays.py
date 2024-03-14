@@ -37,7 +37,7 @@ class Solution:
         
         # create a dictionary with indexes as values
         dic = self.create_dictionary(nums)
-        print(dic)
+        #print(dic)
 
         # loop through the nums
         index1 = 0
@@ -52,12 +52,12 @@ class Solution:
 
                     # check to make sure (val, val2, val_need) is not already in retval
                     # otherwise just continue to the next
-                    if self.exists_already(val, val2, retval):
+                    if self.exists_already(val, val2, retval, index1, index2, retval_indexes):
                         index2 += 1
                         continue
 
 
-                    print(f'{val} and {val2} so need this val: {val_need}')
+                    # print(f'{val} and {val2} so need this val: {val_need}')
                     if val_need in dic:
                         vals = dic[val_need]
                         # print(f'found {val_need} in dic {vals}')
@@ -76,10 +76,19 @@ class Solution:
 
         return retval
 
-    def exists_already(self, val, val2, retval):
+    def exists_already(self, val, val2, retval, index1, index2, retval_indexes):
+        print('\n')
+        print(f'val: {val} and val2: {val2}')
+        print(f'retval are: {retval}')
+        print(f'index1: {index1} and index2: {index2}')
+        print(f'retval_indexes are: {retval_indexes}')
+        valindex = 0
         for vals in retval:
             if (val in vals) and (val2 in vals):
+                indexes = retval_indexes[valindex]
+                #if (index1 in indexes) and (index2 in indexes):
                 return True
+            valindex += 1
         return False
 
     def create_dictionary(self, nums):

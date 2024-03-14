@@ -1,4 +1,10 @@
 my goal here is to get to the competitions of kaggle. we will see.
 
-# title1
+# startup
 [link to kaggle](https://www.kaggle.com/)
+
+## title 2
+
+
+## title 3
+
