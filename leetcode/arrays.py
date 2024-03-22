@@ -74,20 +74,27 @@ class Solution:
                     index2 += 1
             index1 += 1
 
+        # print(f'retval is: {retval}')
+        # print(f'retval_indexes are: {retval_indexes}')
+
         return retval
 
     def exists_already(self, val, val2, retval, index1, index2, retval_indexes):
-        print('\n')
-        print(f'val: {val} and val2: {val2}')
-        print(f'retval are: {retval}')
-        print(f'index1: {index1} and index2: {index2}')
-        print(f'retval_indexes are: {retval_indexes}')
+        # print('\n')
+        # print(f'val: {val} and val2: {val2}')
+        # print(f'retval are: {retval}')
+        # print(f'index1: {index1} and index2: {index2}')
+        # print(f'retval_indexes are: {retval_indexes}')
         valindex = 0
         for vals in retval:
             if (val in vals) and (val2 in vals):
-                indexes = retval_indexes[valindex]
-                #if (index1 in indexes) and (index2 in indexes):
-                return True
+                
+                if (val == 0) and (val2 == 0):
+                    # if there are already 2 zeros then it is all set
+                    if vals.count(0) >= 2:
+                        return True
+                else:
+                    return True
             valindex += 1
         return False
 
@@ -114,6 +121,8 @@ s = Solution()
 # grid = [-1,0,1,2,-1,-4]
 #  grid = [1,2,-2,-1]
 # grid = [0, 0, 0]
-grid = [-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0]
+# grid = [0, 0, 0, 1, -1]
+# not working grid = [-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0]
+grid = [-4, 4,-2,0,4,0,-2,3,1,-5,0]
 ret = s.threeSum(grid)
 print(f'ret is: {ret}')
