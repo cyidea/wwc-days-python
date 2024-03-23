@@ -39,63 +39,74 @@ class Solution:
         dic = self.create_dictionary(nums)
         #print(dic)
 
+        # here is a set that contains 
+
         # loop through the nums
         index1 = 0
         index2 = 0
         retval = []
-        retval_indexes = []
+        already_checked = []
+        all_zero_added = False
         for val in nums:
             index2 = index1 + 1
             for val2 in nums[index1 + 1:]:
                     # print(f'index2 is: {index2}')
                     val_need = 0 - val - val2
 
-                    # check to make sure (val, val2, val_need) is not already in retval
-                    # otherwise just continue to the next
-                    if self.exists_already(val, val2, retval, index1, index2, retval_indexes):
-                        index2 += 1
-                        continue
-
-
                     # print(f'{val} and {val2} so need this val: {val_need}')
                     if val_need in dic:
+
+                        # check to make sure (val, val2, val_need) is not already in retval
+                        # otherwise just continue to the next
+                        if self.exists_already(val, val2, retval, already_checked, all_zero_added):
+                            index2 += 1
+                            continue
+
                         vals = dic[val_need]
                         # print(f'found {val_need} in dic {vals}')
                         # find the index that is not index1 or index2
                         for index_val in vals:
                             if index1 != index_val and index2 != index_val:
+                                if val == 0 and val2 == 0 and val_need == 0:
+                                    all_zero_added = True
                                 tup = [val, val2, val_need]
                                 # print(f'appending tup: {tup}')
                                 retval.append(tup)
-                                the_indexes = [index1, index_val, index2]
-                                # print(f'appending retval_index: {the_indexes}')
-                                retval_indexes.append(the_indexes)
                                 break
                     index2 += 1
             index1 += 1
 
         # print(f'retval is: {retval}')
-        # print(f'retval_indexes are: {retval_indexes}')
 
         return retval
 
-    def exists_already(self, val, val2, retval, index1, index2, retval_indexes):
+    def exists_already(self, val, val2, retval, already_checked, all_zero_added):
         # print('\n')
         # print(f'val: {val} and val2: {val2}')
         # print(f'retval are: {retval}')
-        # print(f'index1: {index1} and index2: {index2}')
-        # print(f'retval_indexes are: {retval_indexes}')
-        valindex = 0
-        for vals in retval:
+        if val == 0 and val2 == 0 and all_zero_added:
+            return True
+        
+        for vals in already_checked:
             if (val in vals) and (val2 in vals):
-                
                 if (val == 0) and (val2 == 0):
                     # if there are already 2 zeros then it is all set
                     if vals.count(0) >= 2:
                         return True
                 else:
                     return True
-            valindex += 1
+
+        for vals in retval:
+            if (val in vals) and (val2 in vals):
+                
+                if (val == 0) and (val2 == 0):
+                    # if there are already 2 zeros then it is all set
+                    if vals.count(0) >= 2:
+                        already_checked.append([val, val2])
+                        return True
+                else:
+                    already_checked.append([val, val2])
+                    return True
         return False
 
     def create_dictionary(self, nums):
