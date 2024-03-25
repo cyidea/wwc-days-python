@@ -26,7 +26,9 @@ class Solution:
             if c == 'I':
                 if the_next:
                     if the_next == 'I':
+                        rest_string = rest_string[1:]
                         r += 1
+                        continue
                     elif the_next == 'V':
                         r += 4
                         rest_string = rest_string[2:]
@@ -35,11 +37,10 @@ class Solution:
                         r += 9
                         rest_string = rest_string[2:]
                         continue
-                else:
-                    r += 1
+                
+                r += 1
             elif c == 'X':
                 if the_next:
-                    
                     if the_next == 'L':
                         r += 40
                         rest_string = rest_string[2:]
@@ -48,9 +49,10 @@ class Solution:
                         r += 90
                         rest_string = rest_string[2:]
                         continue
+                    
+                r += 10
             elif c== 'C':
                 if the_next:
-                    
                     if the_next == 'D':
                         r += 400
                         rest_string = rest_string[2:]
@@ -59,6 +61,8 @@ class Solution:
                         r += 900
                         rest_string = rest_string[2:]
                         continue
+        
+                r += 100
             # special cases ended here
             elif c == 'V':
                 r += 5
@@ -73,5 +77,5 @@ class Solution:
         return r
 
 s = Solution()
-ret = s.romanToInt("MCMXCIV")
-print(f'{ret}')
+ret = s.romanToInt("MDLXX")
+print(f'{ret}') 
