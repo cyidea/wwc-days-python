@@ -1,8 +1,8 @@
 import pandas as pd
 from sklearn.tree import DecisionTreeRegressor
 
-# you would have installed both pandas and scikit-learn
-# but if you haven't, here is how to install them on Mac:
+# you would have to have both pandas and scikit-learn
+# but if you don't, here is how to install them on Mac:
 # pip3 install --upgrade pip
 # pip3 install pandas
 # pip3 install scikit-learn
@@ -16,6 +16,7 @@ data = {'Temperature': [30, 32, 35, 20, 22, 25, 28],
         'Visibility': [10, 8, 9, 6, 7, 5, 10],
         'AQI': [20, 25, 30, 40, 35, 45, 50]}
 
+# create a Pandas DataFrame using the data
 df = pd.DataFrame(data)
 
 # Separate features(X) and target(y) variables
@@ -27,6 +28,9 @@ y = df['AQI']
 # Create and fit the Decision Tree Regressor
 regressor = DecisionTreeRegressor()
 regressor.fit(X, y)
+
+# from this time on we can use the regressor 
+# for making predictions:
 
 # Make predictions on new data
 new_data = {'Temperature': [27, 29],
@@ -44,12 +48,13 @@ predictions = regressor.predict(new_df)
 new_df['Predicted_AQI'] = predictions
 
 # Concatenate new_df with the original dataframe df
+# this is just one way to use the prediction.
 df_with_predictions = pd.concat([df, new_df], ignore_index=True)
 
 print(df_with_predictions)
 
 """
-result: As you can see the predicted_AQI shows only for the new data
+result: As you can see the predicted_AQI shows only for the two new data rows
    Temperature  Humidity  Pressure  WindSpeed  Rainfall  Visibility   AQI  Predicted_AQI
 0           30        60      1010          5         0          10  20.0            NaN
 1           32        65      1012          6         0           8  25.0            NaN
