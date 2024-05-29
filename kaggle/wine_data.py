@@ -61,4 +61,18 @@ Tempranillo
 4   Italy  Piedmont      85     14      Barbera         6.071429       2
 
 """
+print('\n')
 
+# filtering using lambda:
+high_rating_wines = wine_data[wine_data.apply(lambda row: row['rating'] > 2, axis=1)]
+
+# keeping only three columns (to demonstrate keeping specific columns):
+print(high_rating_wines[['Country', 'Variety', 'rating']])
+
+'''
+result:
+  Country     Variety  rating
+0  France      Merlot       3
+1   Italy  Sangiovese       3
+3  France  Pinot Noir       3
+'''
