@@ -76,3 +76,18 @@ result:
 1   Italy  Sangiovese       3
 3  France  Pinot Noir       3
 '''
+
+# empty df case
+df = pd.DataFrame(columns=['A', 'B', 'C'])
+
+# Define the filtering conditions using a lambda function
+condition = lambda row: row['A'] > 10 and row['B'] > 3
+
+# Filter the DataFrame, select columns A and C
+filtered_df = df[df.apply(condition, axis=1)]
+
+# Check if the filtered DataFrame is empty
+if filtered_df.empty:
+    print("The filtered DataFrame is empty.")
+else:
+    print(filtered_df)
