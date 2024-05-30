@@ -31,5 +31,10 @@ Temperature (C)
 30                   Toronto        NaN
 """
 
+# Find the cities in df_us that don't exist in df_canada
+cities_not_in_canada = df_us[~df_us['City'].isin(df_canada['City'])]
+
+print("Cities in df_us that don't exist in df_canada:")
+print(cities_not_in_canada)
 
 
