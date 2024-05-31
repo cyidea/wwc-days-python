@@ -77,6 +77,14 @@ result:
 3  France  Pinot Noir       3
 '''
 
+# for simple filtering you don't need lambda:
+high_rating_wines_2 = wine_data[wine_data['rating'] > 2]
+
+print('\nhigh_rating_wines_2:')
+# keeping only three columns (to demonstrate keeping specific columns):
+print(high_rating_wines_2[['Country', 'Variety', 'rating']])
+
+
 # empty df case
 df = pd.DataFrame(columns=['A', 'B', 'C'])
 
