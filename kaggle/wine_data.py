@@ -89,10 +89,17 @@ print(high_rating_wines_2[['Country', 'Variety', 'rating']])
 # the intermediary results
 # to only display the wines that Variety starts with letter M:
 wine_data['variety_M'] = wine_data['Variety'].str.startswith('M')
+
+# or this also works:
 print(wine_data[wine_data['Variety'].str.startswith('M')])
 
-# and you can't do this:
-wine_data[wine_data.apply(lambda row: row['Variety'].str.startswith('M'), axis=1)]
+# or with regex:
+new_wine_data = wine_data.loc[wine_data['Variety'].str.match(r'^M')]
+print('\nNew wine data: ')
+print(new_wine_data)
+
+# but you can't use the lambda this way that combines with string function:
+# wine_data[wine_data.apply(lambda row: row['Variety'].str.startswith('M'), axis=1)]
 
 #here is the error you will get:
 '''
