@@ -6,7 +6,7 @@ data = {
     'Region': ['Bordeaux', 'Tuscany', 'Rioja', 'Burgundy', 'Piedmont','Rioja'],
     'Points': [87, 95, 84, 97, 85, 89],
     'Price': [15, 65, 13, 64, 14, 13],
-    'Variety': ['Merlot', 'Sangiovese', 'Tempranillo', 'Pinot Noir', 'Barbera', 
+    'Variety': ['Merlot', 'Sangiovese', 'Tempranillo', 'Merlot', 'Barbera', 
                 'Tempranillo'],
     'Reviewer': ['John', 'Emily', 'Michael', 'Sophia', 'William','Michael'],
     'Vintage': [2010, 2012, 2015, 2013, 2011,2015],
@@ -63,8 +63,7 @@ print(variety_prices)
              min  max
 Variety              
 Barbera       14   14
-Merlot        15   15
-Pinot Noir    64   64
+Merlot        15   64
 Sangiovese    65   65
 Tempranillo   13   13
 """
@@ -78,13 +77,35 @@ print(sorted_varieties)
 
 """
 result:
+             min  max
 Variety              
 Sangiovese    65   65
-Pinot Noir    64   64
-Merlot        15   15
+Merlot        15   64
 Barbera       14   14
 Tempranillo   13   13
 """
+
+# finding the difference between the min and max prices:
+# in order to exercise how to calulate based on these secondary values:
+variety_prices['price_diff'] = variety_prices.apply(lambda row: row['max'] - row['min'], axis=1)
+
+# reset_index is important in case the index was a multi-column index:
+variety_prices.reset_index()
+
+# now further improvement using different column names (how to rename stuff)
+variety_prices.rename(columns={'price_diff': 'difference between max and min'}, inplace=True)
+# print only certain columns:
+print(variety_prices[['difference between max and min']])
+'''
+result:
+             difference between max and min
+Variety                                    
+Barbera                                   0
+Merlot                                   49
+Sangiovese                                0
+Tempranillo                               0
+'''
+
 
 # Create a `Series` whose index is reviewers and whose values is 
 # the average review score given out by that reviewer. 
