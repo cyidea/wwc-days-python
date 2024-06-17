@@ -1,5 +1,28 @@
 import pandas as pd
 
+def find_managers(employee: pd.DataFrame) -> pd.DataFrame:
+    print(employee)
+    if employee.empty:
+        return pd.DataFrame({'name': []})
+        
+    counts = employee.groupby(['managerId']).id.agg(
+        num_times = "count"
+        ).reset_index()
+    newq = counts.query('num_times >= 5')
+    newq = newq.merge(employee, left_on='managerId', right_on='id', how='left')
+    print('\n')
+    print(newq)
+    newqnameempty = newq[~(newq['name'].isna())]
+    newqidempty = newq[~(newq['id'].isna())]
+    if newqidempty.empty:
+        return pd.DataFrame({'name': []})
+
+    if newqnameempty.empty:
+        return pd.DataFrame({'name': [None]})
+    else:
+        return newqnameempty[['name']]
+
+# first test:
 data = [
     [101, 'John', 'A', None],
     [102, 'Dan', 'A', 101],
@@ -12,15 +35,7 @@ data = [
 columns = ['id', 'name', 'department', 'managerId']
 employees = pd.DataFrame(data, columns=columns)
 
-print(employees)
-
-counts = employees.groupby(['managerId']).id.agg(
-    num_times = "count"
-     ).reset_index()
-newq = counts.query('num_times >= 5')
-newq = newq.merge(employees, left_on='managerId', right_on='id', how='left')
-print(newq[['name']])
-
+print(find_managers(employees))
 
 ############ this is a failed case, going to debug this:
 data = [
@@ -33,19 +48,21 @@ data = [
 ]
 
 columns = ['id', 'name', 'department', 'managerId']
-employee = pd.DataFrame(data, columns=columns)
+employees = pd.DataFrame(data, columns=columns)
 
-print(employee)
+print(find_managers(employees))
 
-counts = employee.groupby(['managerId']).id.agg(
-    num_times = "count"
-     ).reset_index()
-newq = counts.query('num_times >= 5')
-newq = newq.merge(employee, left_on='managerId', right_on='id', how='left')
-print(newq[['name']].dropna())
+# 3rd case:
+data = [
+    [101, None, 'A', None],
+    [102, None, 'A', 101],
+    [103, None, 'A', 101],
+    [104, None, 'A', 101],
+    [105, None, 'A', 101],
+    [106, None, 'B', 101]
+]
 
-# need to fix the third error
-# using https://stackoverflow.com/questions/53198369/conditional-dropna-pandas
-# because looks like 'null' and na is the same,
-# but we have to get rid of only na.
-# anyway, copy the example here and deal with.
+columns = ['id', 'name', 'department', 'managerId']
+employees = pd.DataFrame(data, columns=columns)
+print(find_managers(employees))
+
